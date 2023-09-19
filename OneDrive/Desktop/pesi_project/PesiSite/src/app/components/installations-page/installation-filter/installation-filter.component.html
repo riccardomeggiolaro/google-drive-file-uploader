@@ -1,0 +1,12 @@
+<form [formGroup]="filtersForm">
+    <mat-form-field>
+      <mat-label>Codice</mat-label>
+      <input matInput placeholder="Codice" #input formControlName="installationCode">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descrizione</mat-label>
+      <input matInput placeholder="Descrizione" #input formControlName="description">
+    </mat-form-field>
+    <button mat-raised-button (click)="deleteFilters()">Azzera filtri</button>
+    <button mat-raised-button color="primary" (click)="openDialog()">Aggiungi</button>
+</form>

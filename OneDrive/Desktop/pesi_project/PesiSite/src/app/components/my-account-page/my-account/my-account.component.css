@@ -1,0 +1,54 @@
+mat-card{
+    margin: 2%;
+}
+.container{
+    width: auto;
+    height: auto;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+}
+.cont{
+    display: flex;
+}
+form{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    width: 80%;
+    border: transparent;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid ;
+    justify-content: center;
+    text-align: center;
+    border: none;
+}
+form > * {
+    font-family: 'Roboto', 'sans-serif';
+    border: transparent;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: large;
+}
+input::placeholder{
+    color: cornflowerblue;
+    text-align: center;
+}
+button{
+    margin-right: 5px;
+}
+.container-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.container-card mat-card{
+    width: 100%;
+}

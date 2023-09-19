@@ -1,0 +1,51 @@
+.navbar{
+    width: 100% !important;
+    height: 6vh;
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.toolbar-item-spacer {
+    flex: 1 1 auto;
+}
+
+.app-container {
+    height: 94vh;
+    margin: 0;
+}  
+.not-authenticated {
+    height: 100vh !important;
+    margin: 0;
+}
+.app-sidenav {
+    width: 230px;
+}
+.app-sidenav-content {
+    display: flex;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+} 
+.mat-mdc-list-base{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.mdc-list-item{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+mat-sidenav{
+    background-color: var(--primary-color);
+    border-right-color: var(--primary-color);
+}
+mat-sidenav-content{
+    background-color: var(--secondary-color);
+}
+.button{
+    width: fit-content;
+    height: 100%;
+    color: var(--white);
+}
+img{
+    height: 200% !important;
+}

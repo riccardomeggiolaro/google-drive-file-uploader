@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+  overflow: auto
+}
+.actions{
+  display: flex;
+  flex-direction: row;
+}
+.actions button:first-child{
+  width: 80px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+button{
+  margin: 3px;
+}
+mat-paginator{
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: 50px;
+}
+.div{
+  position: fixed; 
+  margin: auto;
+}

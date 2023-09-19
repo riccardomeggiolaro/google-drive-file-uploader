@@ -1,0 +1,27 @@
+<form [formGroup]="filtersForm">
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Username" #input formControlName="username">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Installazione</mat-label>
+    <mat-select formControlName="idInstallation">
+      <mat-option value="">
+        <div style="margin: 10px auto 10px auto;">
+          <strong>--nessuna--</strong>
+        </div>        
+      </mat-option>
+      <mat-option *ngFor="let installation of installations$ | async" [value]="installation.id">
+        <div style="margin: 10px auto 10px auto;">
+          <strong>Codice: </strong>{{ installation.installationCode }}
+          <br>
+          <strong>Descrizione: </strong>{{ installation.description }}
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="deleteFilters()">Azzera filtri</button>
+  <button mat-raised-button color="primary" (click)="openDialog()">Aggiungi</button>
+</form>

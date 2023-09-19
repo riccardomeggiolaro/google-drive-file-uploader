@@ -1,0 +1,51 @@
+<div class="container-dialog">
+    <h1 mat-dialog-title>Nuova carta</h1>
+    <div mat-dialog-content>
+      <form [formGroup]="addForm">
+        <mat-form-field>
+          <mat-label>Codice Carta</mat-label>
+          <input matInput type="text" formControlName="cardCode" minlength="6" [maxlength]="30">
+          <mat-hint align="start">Min 6 caratteri</mat-hint>
+          <mat-hint align="end">{{(addForm.value.cardCode?.length! || 0) < 6 ? ((6 - (addForm.value.cardCode?.length || 0)) + " mancanti") : ""}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Veicolo</mat-label>
+          <input matInput type="text" formControlName="vehicle" minlength="4" [maxlength]="20">
+          <mat-hint align="start">Min 4 caratteri</mat-hint>
+          <mat-hint align="end">{{(addForm.value.vehicle?.length! || 0) < 4 ? ((4 - (addForm.value.vehicle?.length || 0)) + " mancanti") : ""}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Targa</mat-label>
+            <input matInput type="text" formControlName="plate" minlength="6" [maxlength]="50">
+            <mat-hint align="start">Min 6 caratteri</mat-hint>
+            <mat-hint align="end">{{(addForm.value.plate?.length! || 0) < 6 ? ((6 - (addForm.value.plate?.length || 0)) + " mancanti") : ""}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Ragione Sociale</mat-label>
+            <mat-select formControlName="idSubject">
+              <mat-option *ngFor="let subject of subjects$ | async" [value]="subject.id">
+                <div style="margin: 10px auto 10px auto;">
+                  {{ subject.socialReason }}
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field *appIfAdmin>
+          <mat-label>Installazione</mat-label>
+          <mat-select formControlName="idInstallation">
+            <mat-option *ngFor="let installation of installations$ | async" [value]="installation.id">
+              <div style="margin: 10px auto 10px auto;">
+                <strong>Codice: </strong>{{ installation.installationCode }}
+                <br>
+                <strong>Descrizione: </strong>{{ installation.description }}
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button (click)="onNoClick()" color="warn">Esci</button>
+      <button mat-raised-button (click)="add()" color="primary" [disabled]="!addForm.valid">Ok</button>
+    </div>  
+  </div>

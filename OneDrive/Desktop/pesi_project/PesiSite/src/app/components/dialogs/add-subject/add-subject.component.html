@@ -1,0 +1,27 @@
+<div class="container-dialog">
+    <h1 mat-dialog-title>Nuovo soggetto</h1>
+    <div mat-dialog-content>
+      <form [formGroup]="addForm">
+        <mat-form-field>
+          <mat-label>Ragione Sociale</mat-label>
+          <input matInput type="text" formControlName="socialReason" minlength="8" [maxlength]="50">
+          <mat-hint align="start">Min 8 caratteri</mat-hint>
+          <mat-hint align="end">{{(addForm.value.socialReason?.length! || 0) < 8 ? ((8 - (addForm.value.socialReason?.length || 0)) + " mancanti") : ""}}</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Numero Di Telefono</mat-label>
+          <input matInput type="number" formControlName="telephoneNumber">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>CFPIVA</mat-label>
+            <input matInput type="text" formControlName="CFPIVA" minlength="15" [maxlength]="30">
+            <mat-hint align="start">Min 15 caratteri</mat-hint>
+            <mat-hint align="end">{{(addForm.value.CFPIVA?.length! || 0) < 15 ? ((15 - (addForm.value.CFPIVA?.length || 0)) + " mancanti") : ""}}</mat-hint>
+        </mat-form-field>
+      </form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button (click)="onNoClick()" color="warn">Esci</button>
+      <button mat-raised-button (click)="add()" color="primary" [disabled]="!addForm.valid">Ok</button>
+    </div>  
+  </div>

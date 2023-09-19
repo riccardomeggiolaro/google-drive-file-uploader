@@ -1,0 +1,58 @@
+table {
+    width: 100%;
+    overflow: auto
+}
+.actions{
+    display: flex;
+    flex-direction: row;
+}
+.actions button:first-child{
+    width: 80px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+button{
+    margin: 3px;
+}
+mat-paginator{
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50px;
+}
+.div{
+    position: fixed; 
+    margin: auto;
+}  
+tr.example-detail-row {
+    height: 0;
+}
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}  
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}  
+.example-element-row td {
+    border-bottom-width: 0;
+}  
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}  
+.example-element-description {
+    padding: 16px;
+}
+mat-card-footer{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between;
+}
+mat-card-footer div{
+    margin-left: 20px; 
+    margin-top: auto; 
+    margin-bottom: auto;
+}
+mat-card-footer div .excel{
+    background-color: var(--excel); 
+    color: var(--white);
+}

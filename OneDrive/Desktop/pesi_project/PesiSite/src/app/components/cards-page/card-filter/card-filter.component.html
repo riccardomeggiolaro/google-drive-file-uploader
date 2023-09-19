@@ -1,0 +1,37 @@
+<form [formGroup]="filtersForm">
+    <mat-form-field>
+      <mat-label>Codice Carta</mat-label>
+      <input matInput placeholder="Codice carta" #input formControlName="cardCode">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Targa</mat-label>
+        <input matInput placeholder="Codice carta" #input formControlName="plate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Ragione Sociale</mat-label>
+      <input matInput placeholder="Ragione Sociale" #input formControlName="socialReason">
+    </mat-form-field>
+
+    <mat-form-field *appIfAdmin>
+      <mat-label>Installazione</mat-label>
+      <mat-select formControlName="idInstallation">
+        <mat-option value="">
+          <div style="margin: 10px auto 10px auto;">
+            <strong>--nessuna--</strong>
+          </div>        
+        </mat-option>
+        <mat-option *ngFor="let installation of installations$ | async" [value]="installation.id">
+          <div style="margin: 10px auto 10px auto;">
+            <strong>Codice: </strong>{{ installation.installationCode }}
+            <br>
+            <strong>Descrizione: </strong>{{ installation.description }}
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <button mat-raised-button (click)="deleteFilters()">Azzera filtri</button>
+    <button mat-raised-button color="primary" (click)="openDialog()">Aggiungi</button>
+  </form>
