@@ -1,9 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, catchError, takeUntil, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +13,32 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
   loginForm = this.fb.group({
     username: ['', {validators: Validators.required}],
     password: ['', {validators: Validators.required}]
   })
 
-  loginError = '';
+  hide = true;
+
+  togglePasswordVisibility(event: Event){
+    event.stopPropagation();
+    this.hide = !this.hide;
+  }
 
   private destroyed$ = new Subject<void>();
 
-  constructor(protected fb: FormBuilder,
+  constructor(private snackBar: MatSnackBar,
+              protected fb: FormBuilder,
+              private route: ActivatedRoute,
               private authSrv: AuthService,
               private router: Router) { }
 
+  openSnackBar(message: string) {
+    this.snackBar.open(message, "Close", {
+      duration: 3000,
+      panelClass: ['red'],
+    });
+  }
               
   ngOnInit(): void {
     this.loginForm.valueChanges
@@ -32,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         takeUntil(this.destroyed$)
       )
       .subscribe(() => {
-        this.loginError = '';
+        this.snackBar.dismiss();
       });
   }
 
@@ -47,13 +61,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authSrv.login(username!, password!)
         .pipe(
           catchError(err => {
-            if(err.status === 429) this.loginError = err.error;
-            else this.loginError = err.error.code;
+            if(err.status === 429) this.openSnackBar(err.error)
+            else this.openSnackBar(err.error.code);
             return throwError(() => err);   
           })
         )
         .subscribe(() => {
-          this.router.navigate(['/dashboard'])
+          this.router.navigate(['/events'])
         });
     }
   }

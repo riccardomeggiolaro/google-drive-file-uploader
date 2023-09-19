@@ -1,11 +1,18 @@
 <div class="container">
-  <form (ngSubmit)="login()" [formGroup]="loginForm">
-    <!-- Email input -->
-    <input type="text" class="form-control" formControlName="username" placeholder="username" />
-    <input type="password" class="form-control" formControlName="password" placeholder="password" />
-    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-    <div class="text-danger" *ngIf="loginError">
-      {{ loginError }}
-    </div>
-  </form>
+    <form (ngSubmit)="login()" [formGroup]="loginForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your email</mat-label>
+        <input matInput type="text" formControlName="username">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide; $event.stopPropagation()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-raised-button type="submit" mat-button extended [disabled]="loginForm.invalid">
+          Login
+      </button>
+    </form>
 </div>
