@@ -1,0 +1,96 @@
+.selected,
+.uploaded,
+.drop-zone {
+  transition: all 0.3s ease;
+}
+
+.file-upload-container {
+    border: 2px solid #253d8a;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: #f0f0f0;
+}
+
+.selected,
+.uploaded {
+  text-align: center;
+}
+
+.selected > *,
+.uploaded > * {
+  margin: 0px 5px 0px 5px;
+}
+
+.fa-trash:hover {
+  cursor: pointer;
+  color: darkred;
+}
+
+.file-upload-container,
+.selected,
+.uploaded {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.drop-zone {
+  border: 2px dashed #253d8a;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.drop-zone.dragover {
+  background-color: white;
+  border-color: #435ab8;
+}
+
+.upload-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+}
+
+.upload-prompt i {
+  font-size: 48px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.upload-prompt p {
+  margin-bottom: 10px;
+}
+
+.upload-prompt button,
+.file-upload-container > .selected > button,
+.file-upload-container > .uploaded > button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-prompt button:hover,
+.file-upload-container > .selected > button:hover,
+.file-upload-container > .uploaded > button:hover {
+  background-color: #0056b3;
+}
+
+.upload-prompt > button,
+.file-upload-container > .selected > button,
+.file-upload-container > .uploaded > button {
+  margin-top: 10px;
+  width: 100%;
+  max-width: min(150px, 100%);
+}
+
+.uploaded > p {
+  margin-top: 10px;
+  text-align: center;
+}
