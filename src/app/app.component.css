@@ -9,5 +9,17 @@
 
 .body > * {
     margin: auto;
-    padding: 10px;
 }
+
+app-file-upload {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+@media (max-width: 500px) {
+    app-file-upload {
+      max-width: 95%;
+    } 
+}
+  

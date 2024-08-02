@@ -11,6 +11,17 @@
     background-color: #f0f0f0;
 }
 
+h1 {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.drop-zone,
+.selected,
+.uploaded {
+  margin-bottom: 5px;
+}
+
 .selected,
 .uploaded {
   text-align: center;
