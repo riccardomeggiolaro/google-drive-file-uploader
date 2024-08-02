@@ -15,9 +15,12 @@
       style="display: none;"
     >
     <div class="upload-prompt">
-      <i class="fas fa-cloud-upload-alt"></i>
-      <p>Trascina qui il tuo file o</p>
-      <button (click)="fileInput.click()">Seleziona un file</button>
+      <div *ngIf="!checking">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Trascina qui il tuo file <strong>CSV</strong> o</p>
+        <button (click)="fileInput.click()">Seleziona un file</button>
+      </div>
+      <mat-progress-bar *ngIf="checking" mode="indeterminate"></mat-progress-bar>
     </div>
   </div>
   <div *ngIf="selectedFile && !uploading" class="selected">

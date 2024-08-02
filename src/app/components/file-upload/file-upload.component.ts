@@ -4,6 +4,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import { GoogleDriveService, UploadResult } from '../../services/google-drive.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { DialogService } from '../../services/dialog.service';
+import { DialogData } from '../dialog-content/dialog-content.component';
 
 @Component({
   standalone: true,
@@ -19,7 +21,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 export class FileUploadComponent {
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private readonly googleDriveService: GoogleDriveService) {}
+  constructor(
+    private readonly googleDriveService: GoogleDriveService,
+    private readonly dialogService: DialogService) {}
 
   faCloudUploadAlt = faCloudUploadAlt
   isDragging = false;
@@ -29,6 +33,7 @@ export class FileUploadComponent {
   uploadError: string | null = null;
   uploading: boolean = false;
   uploaded: number | null = null;
+  checking: boolean = false;
 
   onDragOver(event: DragEvent): void {
     event.preventDefault();
@@ -42,22 +47,49 @@ export class FileUploadComponent {
     this.isDragging = false;
   }
 
-  onDrop(event: DragEvent): void {
+  async onDrop(event: DragEvent): Promise<void> {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = false;
     
     const files = event.dataTransfer?.files;
-    if (files && files.length > 0) {
-      this.selectedFile = files[0];
+    if (files && files.length > 0 && this.isCSVFile(files[0])) {
+      this.checking = true;
+      const fileJustExist = await this.checkIfExist(files[0].name);
+      if (!fileJustExist) {
+        this.selectedFile = files[0];
+      } else {
+        this.openDialog({title: "Ops", description: "E' già stato caricato un file con questo nome sul drive.", type: "error"});
+      }
+    } else {
+      this.openDialog({title: "Formato non valido", description: "Si prega di caricare solo file CSV.", type: "error"});
     }
+    this.checking = false;
   }
 
-  onFileSelected(event: any): void {
+  async onFileSelected(event: any): Promise<void> {
     const files = event.target.files;
-    if (files && files.length > 0) {
-      this.selectedFile = files[0];
+    if (files && files.length > 0 && this.isCSVFile(files[0])) {
+      this.checking = true;
+      const fileJustExist = await this.checkIfExist(files[0].name);
+      if (!fileJustExist) {
+        this.selectedFile = files[0];
+      } else {
+        this.openDialog({title: "Ops", description: "E' già stato caricato un file con questo nome sul drive.", type: "error"});
+      }
+    } else {
+      this.openDialog({title: "Formato non valido", description: "Si prega di caricare solo file CSV.", type: "error"});
     }
+    this.checking = false;
+  }
+
+  private isCSVFile(file: File): boolean {
+    return file.type === 'text/csv' || file.name.endsWith('.csv');
+  }
+
+  private async checkIfExist(fileName: string): Promise<boolean> {
+    const fileJustExist = await this.googleDriveService.existFile(fileName);
+    return fileJustExist.exist;
   }
 
   onRemove(): void {
@@ -91,5 +123,9 @@ export class FileUploadComponent {
       return this.selectedFile.name.substring(0, max_name_length) + ".." + this.selectedFile.name.substring(last_dot, last_index);
     }
     return "";
+  }
+
+  openDialog(data: DialogData): void {
+    this.dialogService.openDialog(data);
   }
 }

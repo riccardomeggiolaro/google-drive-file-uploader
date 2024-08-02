@@ -9,13 +9,21 @@ export interface UploadResult {
   level: number;
 }
 
+export interface ExistFile {
+  exist: boolean
+}
+
+export interface FileId {
+  fileId: string;
+}
+
 const MAX_LEVEL = 5;
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleDriveService {
-  private apiUrl = 'https://ares-qivg4ljtt-rikymeggios-projects.vercel.app/api/upload'; // Replace with your API URL
+  private apiUrl = 'https://ares-m9marvrg7-rikymeggios-projects.vercel.app/api/drive'; // Replace with your API URL
 
   constructor(private http: HttpClient) { }
 
@@ -23,13 +31,17 @@ export class GoogleDriveService {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
-    return this.http.post<any>(this.apiUrl, formData, {
+    return this.http.post<FileId>(`${this.apiUrl}/upload`, formData, {
       reportProgress: true,
       observe: 'events'
     }).pipe(
       map((event: HttpEvent<any>) => this.getEventMessage(event)),
       catchError(this.handleError)
     );
+  }
+
+  async existFile(fileName: string): Promise<ExistFile> {
+    return await this.http.get<ExistFile>(`${this.apiUrl}/exist/${fileName}`).toPromise() as ExistFile;
   }
 
   private getEventMessage(event: HttpEvent<any>): UploadResult {
