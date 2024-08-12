@@ -2,10 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
-import { GoogleDriveService, UploadResult } from '../../services/google-drive.service';
+import { GoogleDriveService } from '../../services/google-drive.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { DialogService } from '../../services/dialog.service';
 import { DialogData } from '../dialog-content/dialog-content.component';
+import { io, Socket } from 'socket.io-client';
 
 @Component({
   standalone: true,
@@ -19,6 +20,7 @@ import { DialogData } from '../dialog-content/dialog-content.component';
   ]
 })
 export class FileUploadComponent {
+
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
@@ -102,8 +104,13 @@ export class FileUploadComponent {
       this.uploadError = null;
       this.uploadSuccess = false;
       this.uploading = true;
-      await this.googleDriveService.upload(this.selectedFile).forEach((value: UploadResult) => {
-        this.uploaded = value.percentage!
+
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+
+      this.googleDriveService.upload(formData).subscribe(value => {
+        console.log(value);
+        this.uploaded = 20;
       });
     }
   }
