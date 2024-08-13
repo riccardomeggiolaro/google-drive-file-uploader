@@ -1,5 +1,7 @@
 <div class="file-upload-container">
   <h1>Finrisk File Uploader</h1>
+
+  <!-- 1° PASSAGGIO: Caricamento del file -->
   <div
     *ngIf="!selectedFile" 
     class="drop-zone" 
@@ -11,7 +13,7 @@
     <input 
       type="file" 
       #fileInput 
-      (change)="onFileSelected($event)" 
+      (change)="onFileSelected($event);" 
       style="display: none;"
     >
     <div class="upload-prompt">
@@ -23,6 +25,8 @@
       <mat-progress-bar *ngIf="checking" mode="indeterminate"></mat-progress-bar>
     </div>
   </div>
+  <!---->
+
   <div *ngIf="selectedFile && !uploading" class="selected">
     <span>File selezionato: <strong> {{ getFileName() }} </strong></span>
     <i class="fa fa-trash" aria-hidden="true" (click)="onRemove()"></i>

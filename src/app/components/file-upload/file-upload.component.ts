@@ -62,9 +62,11 @@ export class FileUploadComponent {
         this.selectedFile = files[0];
       } else {
         this.openDialog({title: "Ops", description: "E' già stato caricato un file con questo nome sul drive.", type: "error"});
+        this.fileInput.nativeElement.value = '';
       }
     } else {
       this.openDialog({title: "Formato non valido", description: "Si prega di caricare solo file CSV.", type: "error"});
+      this.fileInput.nativeElement.value = '';
     }
     this.checking = false;
   }
@@ -78,9 +80,11 @@ export class FileUploadComponent {
         this.selectedFile = files[0];
       } else {
         this.openDialog({title: "Ops", description: "E' già stato caricato un file con questo nome sul drive.", type: "error"});
+        this.fileInput.nativeElement.value = '';
       }
     } else {
       this.openDialog({title: "Formato non valido", description: "Si prega di caricare solo file CSV.", type: "error"});
+      this.fileInput.nativeElement.value = '';
     }
     this.checking = false;
   }
@@ -108,9 +112,16 @@ export class FileUploadComponent {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
 
-      this.googleDriveService.upload(formData).subscribe(value => {
-        console.log(value);
-        this.uploaded = 20;
+      this.googleDriveService.upload(formData).subscribe({
+        next: (data: string) => {
+          console.log('Received', data);
+        },
+        error: (err: any) => {
+          console.error('Errore ricevuto:', err);
+        },
+        complete: () => {
+          console.log('Stream completato');
+        }
       });
     }
   }
